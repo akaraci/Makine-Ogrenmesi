@@ -6,6 +6,8 @@ from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
 # Eğitim ve Test Seti olarak Ayırmak
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score,confusion_matrix
 
 def kategori_sayisi(y):
     cat_list=[]
@@ -92,15 +94,39 @@ def oku(etiket):
     
     print (etiket,":",X.shape,y.shape)
     hasta_sayisi_bilgi(y)
+    return X,y
+
+def Siniflandir(X_train,y_train,X_test,y_test):
+    clf = RandomForestClassifier(n_estimators=100)
+    clf.fit(X_train, y_train)
+    preds = clf.predict(X_test)
+    print ("Random Forest:",round(accuracy_score(y_test, preds),3))
+    print (confusion_matrix(y_test, preds))
+    acc,sen,spec=perf_measure(confusion_matrix(y_test, preds))
+    print("Accuracy=",acc," Sensivity=",sen," Specifictiy=",spec)
     
-    
- 
+def perf_measure(cm):
+
+    TN = cm[0][0]
+    FP = cm[0][1]
+    FN = cm[1][0]
+    TP = cm[1][1]   
+    acc= (TP+TN)/(TP+TN+FP+FN)
+    sensitivity = TP / (TP + FN)
+    specificity = TN / (FP + TN)
+    return(acc,sensitivity,specificity)
+
 dataset_name ="Parkinson.xlsx"
 create_X_and_y(dataset_name)    
 
-oku("Train")
-oku("Test")
-#oku("Val")
+X_train,y_train=oku("Train")
+X_test,y_test=oku("Test")
+
+y_train = [ np.argmax(t) for t in y_train ]
+y_test = [ np.argmax(t) for t in y_test ]
+
+Siniflandir(X_train, y_train, X_test, y_test)
+
 
 
 

@@ -8,8 +8,9 @@ Created on Tue Sep 13 10:47:38 2022
 import pandas as pd
 import numpy as np
 from sklearn.impute import SimpleImputer
-
+import copy
 data=pd.read_csv('data/bikedetails.csv')
+orginaldata=copy.deepcopy(data)
 print(data.info())
 print(data.isnull().sum())
 print(data.shape)

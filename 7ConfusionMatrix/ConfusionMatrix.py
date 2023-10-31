@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Sep 16 15:41:05 2022
+Created on Tue Oct 31 11:49:32 2023
 
-@author: karaci
+@author: akara
 """
 
 from sklearn.metrics import confusion_matrix
@@ -14,9 +14,8 @@ y_pred=np.array([1,1,1,0,0,0,1])
 cf_matrix = confusion_matrix(y_test, y_pred)
 print(cf_matrix)
 
-
-
-ax = sns.heatmap(cf_matrix, annot=True, cmap='viridis')
+sns.set(font_scale=3) #x ve y etiket font boyutunu ayarlar
+ax = sns.heatmap(cf_matrix, annot=True, cmap='viridis', annot_kws={"fontsize":100})
 
 ax.set_title('Confusion Matrix\n\n');
 ax.set_xlabel('\nPredicted Values')
@@ -26,5 +25,3 @@ ax.set_ylabel('Actual Values ');
 ax.xaxis.set_ticklabels(['False','True'])
 ax.yaxis.set_ticklabels(['False','True'])
 
-## Display the visualization of the Confusion Matrix.
-#plt.show()

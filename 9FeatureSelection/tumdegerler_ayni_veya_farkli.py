@@ -15,3 +15,7 @@ print(df.dtypes)
 print(df.nunique())
 print(df.shape)
 
+uniqnumber=df.nunique()
+df2=df.loc[:,uniqnumber==df.shape[0]] #tüm değerleri farklı olanları al
+df3=df.loc[:,uniqnumber<=3] #3 ve daha az çeşit veri olanları al
+
